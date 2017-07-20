@@ -1,0 +1,17 @@
+package fcnt_sliderInputDefinition.html
+
+input {
+    label "Slider Input"
+    template "<ff-slider-input></ff-slider-input>"
+    wizard "<ff-slider-input view-type='designView'></ff-slider-input>"
+    supportedValidationTypes "required"
+    supportedLogicTypes "valid"
+    propertiesI18n {
+        helptext "Help"
+        startValue "0"
+        minValue "0"
+        maxValue "100"
+        range "false"
+        ticks "false"
+    }
+}

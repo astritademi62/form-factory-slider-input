@@ -1,6 +1,7 @@
 /.classpath
 /.project
 /.settings
+/src/main/import/repository.xml.generated
 .idea
 *.iml
 *.ipr

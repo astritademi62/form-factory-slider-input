@@ -68,9 +68,6 @@
 
     <repositories>
         <repository>
-            <id>jahia-public</id>
-            <name>Jahia Public Repository</name>
-            <url>https://devtools.jahia.com/nexus/content/groups/public</url>
             <releases>
                 <enabled>true</enabled>
                 <updatePolicy>never</updatePolicy>
@@ -78,9 +75,42 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+            <id>jahia-public</id>
+            <name>Jahia Public Repository</name>
+            <url>https://devtools.jahia.com/nexus/content/groups/public</url>
+        </repository>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>form-factory</id>
+            <name>Form Factory Repository</name>
+            <url>https://devtools.jahia.com/nexus/content/repositories/form-factory-releases</url>
         </repository>
     </repositories>
 
+    <distributionManagement>
+        <repository>
+            <id>form-factory-releases</id>
+            <url>https://devtools.jahia.com/nexus/content/repositories/form-factory-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>form-factory-snapshots</id>
+            <url>https://devtools.jahia.com/nexus/content/repositories/form-factory-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.jahia.modules</groupId>
+            <artifactId>form-factory-core</artifactId>
+            <version>2.1.2-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -89,7 +119,9 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Jahia-Depends>default</Jahia-Depends>
+                        <Jahia-Depends>default,siteSettings,form-factory-core</Jahia-Depends>
+                        <!--Higher priority than form-factory-core (2)-->
+                        <Jahia-Module-Priority>4</Jahia-Module-Priority>
                     </instructions>
                 </configuration>
             </plugin>
