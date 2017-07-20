@@ -1,0 +1,10 @@
+<jcr = 'http://www.jcp.org/jcr/1.0'>
+<nt = 'http://www.jcp.org/jcr/nt/1.0'>
+<jnt = 'http://www.jahia.org/jahia/nt/1.0'>
+<jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+<j = 'http://www.jahia.org/jahia/1.0'>
+<mix = 'http://www.jcp.org/jcr/mix/1.0'>
+<fcnt = 'http://www.jahia.org/jahia/fc/nt/1.0'>
+<fcmix = 'http://www.jahia.org/jahia/fc/mix/1.0'>
+
+[fcnt:sliderInputDefinition] > jnt:content, fcmix:definition, mix:title, jmix:droppableContent, jmix:hiddenType
