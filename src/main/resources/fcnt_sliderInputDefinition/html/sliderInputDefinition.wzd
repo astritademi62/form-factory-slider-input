@@ -7,11 +7,13 @@ input {
     supportedValidationTypes "required"
     supportedLogicTypes "valid"
     propertiesI18n {
-        helptext "Help"
+        helptext "help"
         startValue "0"
+        endValue "100"
         minValue "0"
         maxValue "100"
         range "false"
         ticks "false"
+        step "1"
     }
 }

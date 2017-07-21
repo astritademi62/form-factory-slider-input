@@ -1,4 +1,4 @@
-<script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
+
 
 <div class="form-group"
      ng-class="{'has-error': form[input.name].$invalid&&form[input.name].$dirty}"
@@ -12,11 +12,13 @@
     </label>
 
     <div class="col-sm-10" ff-validations ff-logic>
-        <div class="slider" ng-show="true">
-            <label>
-                <rzslider rz-slider-model="minSlider"></rzslider>
-            </label>
-
+        <div class="slider">
+            <input type="hidden"
+                   name="{{input.name}}"
+                   ng-required="isRequired()"
+                   ng-model="input.value"
+                   ng-model-options="{'allowInvalid':true}">
+                <rzslider rz-slider-model="input.value" rz-slider-options="sic.minSlider.options"></rzslider>
         </div>
         <span class="help-block"
               ng-show="input.helptext != undefined">
