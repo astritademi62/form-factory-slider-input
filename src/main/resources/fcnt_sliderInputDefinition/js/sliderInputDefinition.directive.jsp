@@ -20,7 +20,10 @@
             link: linkFunc
         };
         function linkFunc(scope, el, attr, ctrl) {
-
+            if (isNaN(scope.input.minValue) || scope.input.minValue == undefined) {
+                scope.input.minValue = parseInt(scope.input.minValue);
+            }
+            scope.input.value = scope.input.minValue;
         }
     };
     angular.module('formFactory')
@@ -29,33 +32,58 @@
     var SliderInputController = function ($scope, $timeout, $filter,
                                           i18n, $element, $document){
         var sic = this;
+
+        sic.$onInit = function() {
+            $scope.input.ticks = toBool($scope.input.ticks);
+        }
+
         sic.parsed = {};
         sic.i18nMessageGetter = i18n.message;
 
         sic.minSlider = {
-            value: 1,
             options: {
-                floor: 0,
-                ceil: 100,
-                step: 1,
+                floor: parseInt($scope.input.initValue),
+                ceil: parseInt($scope.input.maxValue),
+                step: $scope.input.step,
+                showTicks: toBool($scope.input.ticks),
                 showSelectionBar: true
             }
         }
 
+        $scope.$watch(function() {
+            return $scope.input.ticks;
+        }, function(value) {
+
+            sic.minSlider.options.showTicks = value;
+
+        });
+
         $scope.$watchCollection('input', function (newValue, oldValue) {
-            if (newValue !== undefined && newValue.startValue !== oldValue.startValue) {
-                sic.minSlider.options.floor = parseInt(newValue.startValue);
+            if (newValue !== undefined && newValue.initValue !== oldValue.initValue ){
+                sic.minSlider.options.floor = parseInt(newValue.initValue);
             }
-            if (newValue !== undefined && newValue.endValue !== oldValue.endValue) {
-                sic.minSlider.options.ceil = parseInt(newValue.endValue);
+            if (newValue !== undefined && newValue.minValue !== oldValue.minValue) {
+                $scope.input.minValue = parseInt(newValue.minValue);
+            }
+            if (newValue !== undefined && newValue.maxValue !== oldValue.maxValue) {
+                sic.minSlider.options.ceil = parseInt(newValue.maxValue);
             }
             if (newValue !== undefined && newValue.step !== oldValue.step) {
-                sic.minSlider.options.step = parseInt(newValue.step);
+                sic.minSlider.options.step = newValue.step;
             }
         });
 
         if ($element.hasClass('rz-slider-model')) {
             $element.show();
+        }
+
+        function toBool(value) {
+            if (typeof value === 'boolean') {
+                return value;
+            }
+            else {
+                return value === 'true';
+            }
         }
 
     }

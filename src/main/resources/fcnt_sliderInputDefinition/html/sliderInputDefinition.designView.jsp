@@ -22,48 +22,47 @@
             </label>
             <input type="text" class="form-control" ng-model="input.label">
         </div>
+
         <div class="form-group">
             <label>
                 <span message-key="ff.label.changeHelpText"></span>
             </label>
             <input type="text" class="form-control" ng-model="input.helptext">
         </div>
+
+        <div class="form-group">
+        <label>
+            <span message-key="ff.label.initValue"></span>
+        </label>
+        <input type="text" class="form-control" ng-model="input.initValue">
+        </div>
+
         <div class="form-group">
             <label>
-                <span message-key="ff.label.startValue"></span>
+                <span message-key="ff.label.minValue"></span>
             </label>
-            <input type="text" class="form-control" ng-model="input.startValue">
+            <input type="text" class="form-control" ng-model="input.minValue">
         </div>
+
         <div class="form-group">
             <label>
-                <span message-key="ff.label.endValue"></span>
+                <span message-key="ff.label.maxValue"></span>
             </label>
-            <input type="text" class="form-control" ng-model="input.endValue">
+            <input type="text" class="form-control" ng-model="input.maxValue">
         </div>
+
         <div class="form-group">
             <label>
                 <span message-key="ff.label.step"></span>
             </label>
             <input type="text" class="form-control" ng-model="input.step">
         </div>
-        <%--<div class="form-group">--%>
-            <%--<label>--%>
-                <%--<span message-key="ff.label.close.popup"></span>--%>
-            <%--</label>--%>
-            <%--<input type="text" class="form-control" ng-model="input.closePopupLabel">--%>
-        <%--</div>--%>
-        <%--<div class="checkbox">--%>
-            <%--<label>--%>
-                <%--<input type="checkbox" ng-model="input.displayInPopup" ng-true-value="'true'" ng-false-value="'false'">--%>
-                <%--<span message-key="ff.label.display.in.popup"></span>--%>
-            <%--</label>--%>
-        <%--</div>--%>
-        <%--<div class="checkbox">--%>
-            <%--<label>--%>
-                <%--<input type="checkbox" ng-model="input.enforceReading" ng-true-value="'true'" ng-false-value="'false'">--%>
-                <%--<span message-key="ff.label.enforce.reading"></span>--%>
-            <%--</label>--%>
-        <%--</div>--%>
-        <%--<div id="fic_imagePicker"></div>--%>
+
+        <div class="form-group text-left">
+            <label>
+                <span message-key="ff.label.ticks"></span>
+            <switch class="form-control" ng-model="input.ticks" ng-change="toggleTickOtions"></switch>
+            </label>
+        </div>
     </div>
 </div>

@@ -10,7 +10,6 @@
             <sup>&nbsp;<i class="fa fa-asterisk fa-sm"></i></sup>
         </span>
     </label>
-
     <div class="col-sm-10" ff-validations ff-logic>
         <div class="slider">
             <input type="hidden"
@@ -18,7 +17,7 @@
                    ng-required="isRequired()"
                    ng-model="input.value"
                    ng-model-options="{'allowInvalid':true}">
-                <rzslider rz-slider-model="input.value" rz-slider-options="sic.minSlider.options"></rzslider>
+                <rzslider rz-slider-model="input.minValue" rz-slider-options="sic.minSlider.options"></rzslider>
         </div>
         <span class="help-block"
               ng-show="input.helptext != undefined">
