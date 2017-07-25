@@ -17,7 +17,7 @@
                    ng-required="isRequired()"
                    ng-model="input.value"
                    ng-model-options="{'allowInvalid':true}">
-                <rzslider rz-slider-model="input.minValue" rz-slider-options="sic.minSlider.options"></rzslider>
+                <rzslider rz-slider-model="input.value" rz-slider-options="sic.minSlider.options"></rzslider>
         </div>
         <span class="help-block"
               ng-show="input.helptext != undefined">

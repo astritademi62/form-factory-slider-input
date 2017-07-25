@@ -61,7 +61,7 @@
         <div class="form-group text-left">
             <label>
                 <span message-key="ff.label.ticks"></span>
-            <switch class="form-control" ng-model="input.ticks" ng-change="toggleTickOtions"></switch>
+            <switch class="form-control" ng-model="input.ticks" ng-change="toggleTickOtions()"></switch>
             </label>
         </div>
     </div>
