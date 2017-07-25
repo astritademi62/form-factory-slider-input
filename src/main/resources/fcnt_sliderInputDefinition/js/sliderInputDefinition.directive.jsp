@@ -6,6 +6,9 @@
 
 
 (function (){
+
+    angular.module('formFactory').requires.push('rzModule');
+
     var sliderInput = function (ffTemplateResolver) {
         return {
             restrict: 'E',

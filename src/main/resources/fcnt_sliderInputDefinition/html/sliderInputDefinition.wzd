@@ -14,4 +14,8 @@ input {
         ticks "false"
         step "1"
     }
+    resources {
+        css "css/rzslider.css"
+        javascript "javascript/rzslider.js"
+    }
 }
