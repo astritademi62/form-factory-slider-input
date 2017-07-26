@@ -8,7 +8,7 @@ input {
     supportedLogicTypes "valid"
     propertiesI18n {
         helptext "help"
-        initValue "0"
+        initValue "10"
         minValue "0"
         maxValue "100"
         ticks "false"
