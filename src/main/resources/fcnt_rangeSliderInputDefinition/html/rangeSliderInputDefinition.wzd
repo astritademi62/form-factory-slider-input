@@ -1,13 +1,14 @@
-package fcnt_sliderInputDefinition.html
+package fcnt_rangeSliderInputDefinition.html
 
 input {
-    label "Slider Input"
-    template "<ff-slider-input></ff-slider-input>"
-    wizard "<ff-slider-input view-type='designView'></ff-slider-input>"
+    label "Range Slider Input"
+    template "<ff-range-slider-input></ff-range-slider-input>"
+    wizard "<ff-range-slider-input view-type='designView'></ff-range-slider-input>"
     supportedLogicTypes "valid"
     propertiesI18n {
         helptext "help"
-        initValue "10"
+        minRange "10"
+        maxRange "90"
         minValue "0"
         maxValue "100"
         ticks "false"

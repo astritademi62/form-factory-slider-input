@@ -8,3 +8,4 @@
 <fcmix = 'http://www.jahia.org/jahia/fc/mix/1.0'>
 
 [fcnt:sliderInputDefinition] > jnt:content, fcmix:definition, mix:title, jmix:droppableContent, jmix:hiddenType
+[fcnt:rangeSliderInputDefinition] > jnt:content, fcmix:definition, mix:title, jmix:droppableContent, jmix:hiddenType

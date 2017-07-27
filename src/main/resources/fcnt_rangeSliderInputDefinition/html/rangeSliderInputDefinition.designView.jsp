@@ -31,11 +31,19 @@
         </div>
 
         <div class="form-group" >
-        <label>
-            <span message-key="ff.label.initValue"></span>
-        </label>
-        <input type="text" class="form-control" ng-model="input.initValue">
+            <label>
+                <span message-key="ff.label.minRange"></span>
+            </label>
+            <input type="text" class="form-control" ng-model="input.minRange">
         </div>
+
+        <div class="form-group" >
+            <label>
+                <span message-key="ff.label.maxRange"></span>
+            </label>
+            <input type="text" class="form-control" ng-model="input.maxRange">
+        </div>
+
 
         <div class="form-group">
             <label>
@@ -61,7 +69,7 @@
         <div class="form-group text-left">
             <label>
                 <span message-key="ff.label.ticks"></span>
-            <switch class="form-control" ng-model="input.ticks"></switch>
+                <switch class="form-control" ng-model="input.ticks"></switch>
             </label>
         </div>
     </div>
