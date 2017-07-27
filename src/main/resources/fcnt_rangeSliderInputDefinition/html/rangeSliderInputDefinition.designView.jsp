@@ -49,14 +49,14 @@
             <label>
                 <span message-key="ff.label.minValue"></span>
             </label>
-            <input type="text" class="form-control" ng-model="input.minValue">
+            <input type="text" class="form-control" ng-model="input.floor">
         </div>
 
         <div class="form-group">
             <label>
                 <span message-key="ff.label.maxValue"></span>
             </label>
-            <input type="text" class="form-control" ng-model="input.maxValue">
+            <input type="text" class="form-control" ng-model="input.ceil">
         </div>
 
         <div class="form-group">

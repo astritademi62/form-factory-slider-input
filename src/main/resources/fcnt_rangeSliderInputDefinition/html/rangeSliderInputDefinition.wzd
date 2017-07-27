@@ -9,8 +9,8 @@ input {
         helptext "help"
         minRange "10"
         maxRange "90"
-        minValue "0"
-        maxValue "100"
+        floor "0"
+        ceil "100"
         ticks "false"
         step "1"
     }

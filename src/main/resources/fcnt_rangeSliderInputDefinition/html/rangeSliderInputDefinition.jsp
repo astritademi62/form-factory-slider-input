@@ -15,8 +15,8 @@
                    ng-required="isRequired()"
                    ng-model="input.value"
                    ng-model-options="{'allowInvalid':true}">
-            <rzslider rz-slider-model="input.value.minValue"
-                      rz-slider-model-high="input.value.maxValue"
+            <rzslider rz-slider-model="rsic.minSlider.minValue"
+                      rz-slider-high="rsic.minSlider.maxValue"
                       rz-slider-options="rsic.minSlider.options"></rzslider>
         </div>
 
