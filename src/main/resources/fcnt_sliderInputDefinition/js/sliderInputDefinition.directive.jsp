@@ -50,7 +50,7 @@
                 ceil: parseInt($scope.input.maxValue),
                 step: $scope.input.step,
                 showTicks: toBool($scope.input.ticks),
-                showSelectionBarFromValue: parseInt($scope.input.minValue)
+                showSelectionBarFromValue: parseInt($scope.input.initValue)
             }
         }
 
@@ -60,13 +60,14 @@
             sic.minSlider.options.showTicks = value;
         });
 
+
         $scope.$watchCollection('input', function (newValue, oldValue) {
             if (newValue !== undefined && newValue.initValue !== oldValue.initValue ){
                 $scope.input.value = parseInt(newValue.initValue);
             }
             if (newValue !== undefined && newValue.minValue !== oldValue.minValue) {
                 sic.minSlider.options.floor = parseInt(newValue.minValue);
-                sic.minSlider.options.showSelectionBarFromValue = parseInt(newValue.minValue);
+                sic.minSlider.options.showSelectionBarFromValue = parseInt(newValue.initValue);
                 $scope.input.value = parseInt($scope.input.initValue);
             }
             if (newValue !== undefined && newValue.maxValue !== oldValue.maxValue) {
