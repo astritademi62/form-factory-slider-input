@@ -26,13 +26,15 @@
                 if (isNaN(scope.input.value) || scope.input.value == undefined) {
                     scope.input.value = {
                         minValue : parseInt(scope.input.minRange),
-                        maxValue : parseInt(scope.input.maxRange)
+                        maxValue : parseInt(scope.input.maxRange),
+                        rendererName: 'rangeSliderInput'
                     }
 
                 } else {
                     scope.input.value = {
                         minValue : parseInt(scope.input.minRange),
-                        maxValue : parseInt(scope.input.maxRange)
+                        maxValue : parseInt(scope.input.maxRange),
+                        rendererName: 'rangeSliderInput'
                     }
                 }
             }
@@ -69,6 +71,24 @@
                 rsic.minSlider.options.showTicks = value;
             });
 
+            $scope.$watch(function() {
+                return rsic.minSlider.minValue;
+            }, function(value) {
+                $scope.input.value.minValue = value;
+            });
+
+            $scope.$watch(function() {
+                return rsic.minSlider.maxValue;
+            }, function(value) {
+                $scope.input.value.maxValue = value;
+            });
+
+            $scope.$watch(function() {
+                return $scope.input.ticks;
+            }, function(value) {
+                rsic.minSlider.options.showTicks = value;
+            });
+
             $scope.$watchCollection('input', function (newValue, oldValue) {
                 if (newValue !== undefined && newValue.minRange !== oldValue.minRange ){
                     rsic.minSlider.minValue = parseInt(newValue.minRange);
@@ -95,6 +115,7 @@
                 }
             });
 
+            //this if may be unnecessary
             if ($element.hasClass('rz-slider-model')) {
                 $element.show();
             }

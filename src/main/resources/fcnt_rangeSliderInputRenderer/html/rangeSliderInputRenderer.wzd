@@ -1,0 +1,4 @@
+renderer {
+    label "Range Slider Input Renderer"
+    name "rangeSliderInput"
+}
