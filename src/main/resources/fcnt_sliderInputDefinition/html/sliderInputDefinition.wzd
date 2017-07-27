@@ -4,7 +4,7 @@ input {
     label "Slider Input"
     template "<ff-slider-input></ff-slider-input>"
     wizard "<ff-slider-input view-type='designView'></ff-slider-input>"
-    supportedLogicTypes "valid"
+    supportedLogicTypes "valid", "input"
     propertiesI18n {
         helptext "help"
         initValue "10"

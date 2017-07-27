@@ -4,7 +4,7 @@ input {
     label "Range Slider Input"
     template "<ff-range-slider-input></ff-range-slider-input>"
     wizard "<ff-range-slider-input view-type='designView'></ff-range-slider-input>"
-    supportedLogicTypes "valid"
+    supportedLogicTypes "valid", "input"
     propertiesI18n {
         helptext "help"
         minRange "10"
