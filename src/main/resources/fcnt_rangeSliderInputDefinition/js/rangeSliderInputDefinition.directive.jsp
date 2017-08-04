@@ -61,7 +61,8 @@
                     ceil: parseInt($scope.input.ceil),
                     step: $scope.input.step,
                     showTicks: toBool($scope.input.ticks),
-                    showSelectionBar: true
+                    showSelectionBar: true,
+                    readOnly: $scope.readOnly
                 }
             }
 

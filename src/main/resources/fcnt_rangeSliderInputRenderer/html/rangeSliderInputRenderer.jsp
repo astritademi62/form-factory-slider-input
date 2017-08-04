@@ -9,4 +9,4 @@
 <%@ taglib prefix="query" uri="http://www.jahia.org/tags/queryLib" %>
 
 <span><i>minValue: <@=data.minValue@></i></span><br>
-<span><i>maxValue: <@=data.maxValue@></i></span>
+<span><i>maxValue: <@=data.maxValue@></i></span>&nbsp;

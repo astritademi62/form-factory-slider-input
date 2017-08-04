@@ -833,7 +833,7 @@
         if (!noLabelInjection) {
           label.html(valStr);
         }
-        ;
+
 
         this.scope[which + 'Label'] = valStr;
 

@@ -41,14 +41,14 @@
             <label>
                 <span message-key="ff.label.minValue"></span>
             </label>
-            <input type="text" class="form-control" ng-model="input.minValue">
+            <input type="text" class="form-control" ng-model="input.floor">
         </div>
 
         <div class="form-group">
             <label>
                 <span message-key="ff.label.maxValue"></span>
             </label>
-            <input type="text" class="form-control" ng-model="input.maxValue">
+            <input type="text" class="form-control" ng-model="input.ceil">
         </div>
 
         <div class="form-group">
@@ -63,6 +63,16 @@
                 <span message-key="ff.label.ticks"></span>
             <switch class="form-control" ng-model="input.ticks"></switch>
             </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <span message-key="ff.label.translate"></span>
+            </label>
+
+            <select ng-model="input.translate" ng-change="normalizeTranslateOption()">
+                <option ng-repeat="type in types" value="{{type}}">{{type}}</option>
+            </select>
         </div>
     </div>
 </div>

@@ -5,11 +5,14 @@ input {
     template "<ff-slider-input></ff-slider-input>"
     wizard "<ff-slider-input view-type='designView'></ff-slider-input>"
     supportedLogicTypes "valid", "input"
+    properties {
+        translate "default"
+    }
     propertiesI18n {
         helptext "help"
         initValue "10"
-        minValue "0"
-        maxValue "100"
+        floor "0"
+        ceil "100"
         ticks "false"
         step "1"
     }
