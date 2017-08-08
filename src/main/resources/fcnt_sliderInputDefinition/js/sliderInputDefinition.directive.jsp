@@ -38,7 +38,16 @@
             var sic = this;
             sic.parsed = {};
             sic.i18nMessageGetter = i18n.message;
-            $scope.types = ["default", "currency", "percentage"];
+            $scope.translateTypes = {
+                default : 'Default',
+                currency_$: 'Currency',
+                percentage: 'Percentage'
+            };
+            $scope.currencyTypes = {                  // [ "$", "£", "€" ]
+                '&#36;' : String.fromCharCode(36),
+                '&#x00A3;' : String.fromCharCode(163),
+                '&#8364;' : String.fromCharCode(8364)
+            }
 
             //initial value of minSlider object
             $scope.minSlider = {
@@ -72,9 +81,9 @@
 
             $scope.getTranslation = function(){
                 return function(value){
-                    switch($scope.input.translate) {
+                    switch($scope.input.translate.split('_')[0]) {
                         case 'currency' :
-                            return '$' + value;
+                            return $scope.input.translate.split('_')[1] + value;
                         case 'percentage':
                             return value + '%';
                         default:

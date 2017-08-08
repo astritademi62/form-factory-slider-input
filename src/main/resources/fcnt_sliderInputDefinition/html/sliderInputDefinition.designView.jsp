@@ -71,8 +71,15 @@
             </label>
 
             <select ng-model="input.translate" ng-change="normalizeTranslateOption()">
-                <option ng-repeat="type in types" value="{{type}}">{{type}}</option>
+                <option ng-repeat="(key, translateType) in translateTypes" value="{{key}}">{{translateType}}</option>
             </select>
+            <label ng-if="input.translate.split('_')[0] == 'currency'">
+                <span message-key="ff.label.currency"></span>
+                <select ng-model="input.translate">
+                    <option ng-repeat="(key, currencyType) in currencyTypes" value="currency_{{key}}">{{currencyType}}</option>
+                </select>
+            </label>
+
         </div>
     </div>
 </div>
