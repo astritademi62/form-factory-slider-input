@@ -32,29 +32,29 @@
 
         <div class="form-group" >
             <label>
-                <span message-key="ff.label.minRange"></span>
+                <span message-key="ff.label.minValue"></span>
             </label>
-            <input type="text" class="form-control" ng-model="input.minRange">
+            <input type="text" class="form-control" ng-model="input.minValue">
         </div>
 
         <div class="form-group" >
             <label>
-                <span message-key="ff.label.maxRange"></span>
+                <span message-key="ff.label.maxValue"></span>
             </label>
-            <input type="text" class="form-control" ng-model="input.maxRange">
+            <input type="text" class="form-control" ng-model="input.maxValue">
         </div>
 
 
         <div class="form-group">
             <label>
-                <span message-key="ff.label.minValue"></span>
+                <span message-key="ff.label.floor"></span>
             </label>
             <input type="text" class="form-control" ng-model="input.floor">
         </div>
 
         <div class="form-group">
             <label>
-                <span message-key="ff.label.maxValue"></span>
+                <span message-key="ff.label.ceil"></span>
             </label>
             <input type="text" class="form-control" ng-model="input.ceil">
         </div>

@@ -39,14 +39,14 @@
 
         <div class="form-group">
             <label>
-                <span message-key="ff.label.minValue"></span>
+                <span message-key="ff.label.floor"></span>
             </label>
             <input type="text" class="form-control" ng-model="input.floor">
         </div>
 
         <div class="form-group">
             <label>
-                <span message-key="ff.label.maxValue"></span>
+                <span message-key="ff.label.ceil"></span>
             </label>
             <input type="text" class="form-control" ng-model="input.ceil">
         </div>

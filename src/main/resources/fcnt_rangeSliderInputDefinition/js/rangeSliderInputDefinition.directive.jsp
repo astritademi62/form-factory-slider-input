@@ -25,15 +25,15 @@
                 //set initial min and max range values
                 if (isNaN(scope.input.value) || scope.input.value == undefined) {
                     scope.input.value = {
-                        minValue : parseInt(scope.input.minRange),
-                        maxValue : parseInt(scope.input.maxRange),
+                        minValue : parseInt(scope.input.minValue),
+                        maxValue : parseInt(scope.input.maxValue),
                         rendererName: 'rangeSliderInput'
                     }
 
                 } else {
                     scope.input.value = {
-                        minValue : parseInt(scope.input.minRange),
-                        maxValue : parseInt(scope.input.maxRange),
+                        minValue : parseInt(scope.input.minValue),
+                        maxValue : parseInt(scope.input.maxValue),
                         rendererName: 'rangeSliderInput'
                     }
                 }
@@ -54,8 +54,8 @@
             rsic.i18nMessageGetter = i18n.message;
 
             rsic.minSlider = {
-                minValue: parseInt($scope.input.minRange),
-                maxValue: parseInt($scope.input.maxRange),
+                minValue: parseInt($scope.input.minValue),
+                maxValue: parseInt($scope.input.maxValue),
                 options: {
                     floor: parseInt($scope.input.floor),
                     ceil: parseInt($scope.input.ceil),
@@ -91,18 +91,18 @@
             });
 
             $scope.$watchCollection('input', function (newValue, oldValue) {
-                if (newValue !== undefined && newValue.minRange !== oldValue.minRange ){
-                    rsic.minSlider.minValue = parseInt(newValue.minRange);
+                if (newValue !== undefined && newValue.minValue !== oldValue.minValue ){
+                    rsic.minSlider.minValue = parseInt(newValue.minValue);
                     $scope.input.value.minValue = rsic.minSlider.minValue;
                 }
-                if (newValue !== undefined && newValue.maxRange !== oldValue.maxRange ){
-                    rsic.minSlider.maxValue = parseInt(newValue.maxRange);
+                if (newValue !== undefined && newValue.maxValue !== oldValue.maxValue ){
+                    rsic.minSlider.maxValue = parseInt(newValue.maxValue);
                     $scope.input.value.maxValue = rsic.minSlider.maxValue;
                 }
                 if (newValue !== undefined && newValue.floor !== oldValue.floor) {
                     rsic.minSlider.options.floor = parseInt(newValue.floor);
-                    rsic.minSlider.minValue = parseInt($scope.input.minRange);
-                    rsic.minSlider.maxValue = parseInt($scope.input.maxRange);
+                    rsic.minSlider.minValue = parseInt($scope.input.minValue);
+                    rsic.minSlider.maxValue = parseInt($scope.input.maxValue);
                     $scope.input.value = {
                         minValue: rsic.minSlider.minValue,
                         maxValue: rsic.minSlider.maxValue
