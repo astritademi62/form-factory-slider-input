@@ -48,6 +48,9 @@
 
             rsic.$onInit = function() {
                 $scope.input.ticks = toBool($scope.input.ticks);
+                if (typeof $scope.input.customTicks === "string") {
+                    $scope.input.customTicks = null;
+                }
             }
 
             rsic.parsed = {};
@@ -113,6 +116,9 @@
                 }
                 if (newValue !== undefined && newValue.step !== oldValue.step) {
                     rsic.minSlider.options.step = newValue.step;
+                }
+                if (newValue !== undefined && newValue.customTicks !== oldValue.customTicks){
+                    rsic.minSlider.options.showTicks = parseInt(newValue.customTicks);
                 }
             });
 

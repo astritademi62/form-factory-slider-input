@@ -12,6 +12,7 @@ input {
         floor "0"
         ceil "100"
         ticks "false"
+        customTicks "custom tick value"
         step "1"
     }
     resources {

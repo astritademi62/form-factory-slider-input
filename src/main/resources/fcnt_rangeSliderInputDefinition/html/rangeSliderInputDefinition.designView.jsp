@@ -30,47 +30,66 @@
             <input type="text" class="form-control" ng-model="input.helptext">
         </div>
 
-        <div class="form-group" >
-            <label>
-                <span message-key="ff.label.minValue"></span>
-            </label>
-            <input type="text" class="form-control" ng-model="input.minValue">
+        <div class="col-md-6">
+            <div class="form-group" >
+                <label>
+                    <span message-key="ff.label.minValue"></span>
+                </label>
+                <input type="text" class="form-control" ng-model="input.minValue">
+            </div>
         </div>
 
-        <div class="form-group" >
-            <label>
-                <span message-key="ff.label.maxValue"></span>
-            </label>
-            <input type="text" class="form-control" ng-model="input.maxValue">
+        <div class="col-md-6">
+            <div class="form-group" >
+                <label>
+                    <span message-key="ff.label.maxValue"></span>
+                </label>
+                <input type="text" class="form-control" ng-model="input.maxValue">
+            </div>
         </div>
 
-
-        <div class="form-group">
-            <label>
-                <span message-key="ff.label.floor"></span>
-            </label>
-            <input type="text" class="form-control" ng-model="input.floor">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>
+                    <span message-key="ff.label.floor"></span>
+                </label>
+                <input type="text" class="form-control" ng-model="input.floor">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>
-                <span message-key="ff.label.ceil"></span>
-            </label>
-            <input type="text" class="form-control" ng-model="input.ceil">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>
+                    <span message-key="ff.label.ceil"></span>
+                </label>
+                <input type="text" class="form-control" ng-model="input.ceil">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>
-                <span message-key="ff.label.step"></span>
-            </label>
-            <input type="text" class="form-control" ng-model="input.step">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>
+                    <span message-key="ff.label.step"></span>
+                </label>
+                <input type="text" class="form-control" ng-model="input.step">
+            </div>
         </div>
 
-        <div class="form-group text-left">
-            <label>
-                <span message-key="ff.label.ticks"></span>
-                <switch class="form-control" ng-model="input.ticks"></switch>
-            </label>
+        <div class="col-md-6">
+            <div style="display: inline">
+                <label>
+                    <span message-key="ff.label.ticks"></span>
+                </label>
+            </div>
+            <div class="col-sm-offset-3" style="display: inline">
+                <switch class="float-right" ng-model="input.ticks"></switch>
+            </div>
+            <input type="text"
+                   ng-model="input.customTicks"
+                   class="form-control"
+                   ng-disabled="input.ticks != true"
+                   placeholder="Custom tick variable">
         </div>
+
     </div>
 </div>

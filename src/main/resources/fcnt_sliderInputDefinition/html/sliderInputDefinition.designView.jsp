@@ -30,56 +30,76 @@
             <input type="text" class="form-control" ng-model="input.helptext">
         </div>
 
-        <div class="form-group" >
-        <label>
-            <span message-key="ff.label.initValue"></span>
-        </label>
-        <input type="text" class="form-control" ng-model="input.initValue">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>
+                    <span message-key="ff.label.floor"></span>
+                </label>
+                <input type="text" class="form-control" ng-model="input.floor">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>
-                <span message-key="ff.label.floor"></span>
-            </label>
-            <input type="text" class="form-control" ng-model="input.floor">
+        <div class="col-md-6">
+            <div class="form-group" >
+                <label>
+                    <span message-key="ff.label.initValue"></span>
+                </label>
+                <input type="text" class="form-control" ng-model="input.initValue">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>
-                <span message-key="ff.label.ceil"></span>
-            </label>
-            <input type="text" class="form-control" ng-model="input.ceil">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>
+                    <span message-key="ff.label.ceil"></span>
+                </label>
+                <input type="text" class="form-control" ng-model="input.ceil">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>
-                <span message-key="ff.label.step"></span>
-            </label>
-            <input type="text" class="form-control" ng-model="input.step">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>
+                    <span message-key="ff.label.step"></span>
+                </label>
+                <input type="text" class="form-control" ng-model="input.step">
+            </div>
         </div>
 
-        <div class="form-group text-left">
-            <label>
-                <span message-key="ff.label.ticks"></span>
-            <switch class="form-control" ng-model="input.ticks"></switch>
-            </label>
+        <div class="col-md-6">
+            <div style="display: inline">
+                <label>
+                    <span message-key="ff.label.ticks"></span>
+                </label>
+            </div>
+            <div class="col-sm-offset-3" style="display: inline">
+                <switch class="float-right" ng-model="input.ticks"></switch>
+            </div>
+            <input type="text"
+                   ng-model="input.customTicks"
+                   class="form-control"
+                   ng-disabled="input.ticks != true"
+                   placeholder="Custom tick variable">
         </div>
 
-        <div class="form-group">
-            <label>
-                <span message-key="ff.label.translate"></span>
-            </label>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label style="padding-right: 20px">
+                    <span message-key="ff.label.translate"></span>
+                </label>
+                <dvi style="padding-right: 20px">
+                    <select ng-model="input.translate" ng-change="normalizeTranslateOption()">
+                        <option ng-repeat="(key, translateType) in translateTypes" value="{{key}}">{{translateType}}</option>
+                    </select>
+                </dvi>
+                <label style="padding-right: 20px" ng-if="input.translate.split('_')[0] == 'currency'">
+                    <span message-key="ff.label.currency"></span>
+                </label>
+                    <select ng-model="input.translate" ng-if="input.translate.split('_')[0] == 'currency'">
+                        <option ng-repeat="(key, currencyType) in currencyTypes" value="currency_{{key}}">{{currencyType}}</option>
+                    </select>
 
-            <select ng-model="input.translate" ng-change="normalizeTranslateOption()">
-                <option ng-repeat="(key, translateType) in translateTypes" value="{{key}}">{{translateType}}</option>
-            </select>
-            <label ng-if="input.translate.split('_')[0] == 'currency'">
-                <span message-key="ff.label.currency"></span>
-                <select ng-model="input.translate">
-                    <option ng-repeat="(key, currencyType) in currencyTypes" value="currency_{{key}}">{{currencyType}}</option>
-                </select>
-            </label>
-
+            </div>
         </div>
     </div>
 </div>

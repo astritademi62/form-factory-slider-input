@@ -64,7 +64,12 @@
 
             //It works now, but you have to recompile to see it update in builder mode.
             sic.$onInit = function () {
+                //init show ticks switch
                 $scope.input.ticks = toBool($scope.input.ticks);
+                //init input for custom ticks value
+                if (typeof $scope.input.customTicks === "string") {
+                    $scope.input.customTicks = null;
+                }
                 //If selectedType is not set, then set it to default
                 $scope.input.translate = $scope.input.translate ? $scope.input.translate : 'default';
 
@@ -118,6 +123,9 @@
                 if (newValue !== undefined && newValue.translate !== oldValue.translate) {
                     oldValue.translate = newValue.translate;
                     $scope.$broadcast('rzSliderForceRender');
+                }
+                if (newValue !== undefined && newValue.customTicks !== oldValue.customTicks){
+                    $scope.minSlider.options.showTicks = parseInt(newValue.customTicks);
                 }
             });
 
