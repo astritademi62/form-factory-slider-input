@@ -83,23 +83,25 @@
         </div>
 
         <div class="col-md-6">
-            <div class="form-group">
-                <label style="padding-right: 20px">
+            <div style="position:relative; min-height: 1px; padding-right: 15px; width:25%; float: left">
+                <label>
                     <span message-key="ff.label.translate"></span>
                 </label>
-                <dvi style="padding-right: 20px">
-                    <select ng-model="input.translate" ng-change="normalizeTranslateOption()">
-                        <option ng-repeat="(key, translateType) in translateTypes" value="{{key}}">{{translateType}}</option>
-                    </select>
-                </dvi>
-                <label style="padding-right: 20px" ng-if="input.translate.split('_')[0] == 'currency'">
+                <select class="form-control" ng-model="input.translate" ng-change="normalizeTranslateOption()">
+                    <option ng-repeat="(key, translateType) in translateTypes" value="{{key}}">{{translateType}}</option>
+                </select>
+            </div>
+
+            <div style="position:relative; min-height: 1px; padding-right: 15px; width:25%; float: left">
+                <label ng-if="input.translate.split('_')[0] == 'currency'">
                     <span message-key="ff.label.currency"></span>
                 </label>
-                    <select ng-model="input.translate" ng-if="input.translate.split('_')[0] == 'currency'">
-                        <option ng-repeat="(key, currencyType) in currencyTypes" value="currency_{{key}}">{{currencyType}}</option>
-                    </select>
-
+                <select class="form-control" ng-model="input.translate" ng-if="input.translate.split('_')[0] == 'currency'">
+                    <option ng-repeat="(key, currencyType) in currencyTypes" value="currency_{{key}}">{{currencyType}}</option>
+                </select>
             </div>
         </div>
+    </div>
+
     </div>
 </div>

@@ -15,7 +15,7 @@ input {
         ceil "100"
         ticks "false"
         step "1"
-        customTicks "custom ticks value"
+        customTicks "1"
     }
     resources {
         css "css/rzslider.css"

@@ -38,12 +38,13 @@
             var sic = this;
             sic.parsed = {};
             sic.i18nMessageGetter = i18n.message;
-            $scope.translateTypes = {
+
+            $scope.translateTypes = {                 // these are the translate options
                 default : 'Default',
                 currency_$: 'Currency',
                 percentage: 'Percentage'
             };
-            $scope.currencyTypes = {                  // [ "$", "£", "€" ]
+            $scope.currencyTypes = {                  // [ "$", "£", "€" ] these are the currency types for the currency translate option
                 '&#36;' : String.fromCharCode(36),
                 '&#x00A3;' : String.fromCharCode(163),
                 '&#8364;' : String.fromCharCode(8364)
@@ -55,7 +56,7 @@
                     floor: parseInt($scope.input.floor),
                     ceil: parseInt($scope.input.ceil),
                     step: $scope.input.step,
-                    showTicks: toBool($scope.input.ticks),
+                    showTicks: ticksNormalizer(),
                     showSelectionBarFromValue: parseInt($scope.input.initValue),
                     readOnly: $scope.readOnly,
                     translate: null
@@ -66,9 +67,9 @@
             sic.$onInit = function () {
                 //init show ticks switch
                 $scope.input.ticks = toBool($scope.input.ticks);
-                //init input for custom ticks value
-                if (typeof $scope.input.customTicks === "string") {
-                    $scope.input.customTicks = null;
+                // on init if ticks are disabled the default ticks value should equal the steps value
+                if ($scope.input.ticks == false) {
+                    $scope.input.customTicks = $scope.input.step;
                 }
                 //If selectedType is not set, then set it to default
                 $scope.input.translate = $scope.input.translate ? $scope.input.translate : 'default';
@@ -77,30 +78,11 @@
 
             }
 
-            //func that updates translate option
-            $scope.normalizeTranslateOption = function() {
-
-                $scope.minSlider.options.translate = $scope.getTranslation();
-
-            }
-
-            $scope.getTranslation = function(){
-                return function(value){
-                    switch($scope.input.translate.split('_')[0]) {
-                        case 'currency' :
-                            return $scope.input.translate.split('_')[1] + value;
-                        case 'percentage':
-                            return value + '%';
-                        default:
-                            return value;
-                    }
-                }
-            }
-
-            $scope.$watch(function () {
+            $scope.$watch(function() {
                 return $scope.input.ticks;
-            }, function (value) {
-                $scope.minSlider.options.showTicks = value;
+            }, function(value) {
+                $scope.input.ticks = value;
+                $scope.minSlider.options.showTicks = ticksNormalizer();
             });
 
             // watch input options for the minSlider object and overwrite the old values with the new values
@@ -125,7 +107,8 @@
                     $scope.$broadcast('rzSliderForceRender');
                 }
                 if (newValue !== undefined && newValue.customTicks !== oldValue.customTicks){
-                    $scope.minSlider.options.showTicks = parseInt(newValue.customTicks);
+                    $scope.input.customTicks = newValue.customTicks;
+                    $scope.minSlider.options.showTicks = ticksNormalizer();
                 }
             });
 
@@ -136,6 +119,34 @@
                 }
                 else {
                     return value === 'true';
+                }
+            }
+
+            // func that updates ticks value
+            function ticksNormalizer() {
+                if(toBool($scope.input.ticks) == true || $scope.input.ticks == true){
+                    return parseInt($scope.input.customTicks);
+                } else {
+                    return false;
+                }
+            }
+
+            //func that updates translate option
+            $scope.normalizeTranslateOption = function() {
+                $scope.minSlider.options.translate = $scope.getTranslation();
+            }
+
+            //func that gets/sets translation
+            $scope.getTranslation = function(){
+                return function(value){
+                    switch($scope.input.translate.split('_')[0]) {
+                        case 'currency' :
+                            return $scope.input.translate.split('_')[1] + value;
+                        case 'percentage':
+                            return value + '%';
+                        default:
+                            return value;
+                    }
                 }
             }
 

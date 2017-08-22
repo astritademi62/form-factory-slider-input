@@ -48,13 +48,30 @@
 
             rsic.$onInit = function() {
                 $scope.input.ticks = toBool($scope.input.ticks);
-                if (typeof $scope.input.customTicks === "string") {
-                    $scope.input.customTicks = null;
+
+                // on init if ticks are disabled the default ticks value should equal the steps value
+                if ($scope.input.ticks == false) {
+                    $scope.input.customTicks = $scope.input.step;
                 }
+                //If selectedType is not set, then set it to default
+                $scope.input.translate = $scope.input.translate ? $scope.input.translate : 'default';
+
+                $scope.normalizeTranslateOption();
             }
 
             rsic.parsed = {};
             rsic.i18nMessageGetter = i18n.message;
+
+            $scope.translateTypes = {                 // these are the translate options
+                default : 'Default',
+                currency_$: 'Currency',
+                percentage: 'Percentage'
+            };
+            $scope.currencyTypes = {                  // [ "$", "£", "€" ] these are the currency types for the currency translate option
+                '&#36;' : String.fromCharCode(36),
+                '&#x00A3;' : String.fromCharCode(163),
+                '&#8364;' : String.fromCharCode(8364)
+            }
 
             rsic.minSlider = {
                 minValue: parseInt($scope.input.minValue),
@@ -63,17 +80,12 @@
                     floor: parseInt($scope.input.floor),
                     ceil: parseInt($scope.input.ceil),
                     step: $scope.input.step,
-                    showTicks: toBool($scope.input.ticks),
+                    showTicks: ticksNormalizer(),
                     showSelectionBar: true,
-                    readOnly: $scope.readOnly
+                    readOnly: $scope.readOnly,
+                    translate: null
                 }
             }
-
-            $scope.$watch(function() {
-                return $scope.input.ticks;
-            }, function(value) {
-                rsic.minSlider.options.showTicks = value;
-            });
 
             $scope.$watch(function() {
                 return rsic.minSlider.minValue;
@@ -90,7 +102,8 @@
             $scope.$watch(function() {
                 return $scope.input.ticks;
             }, function(value) {
-                rsic.minSlider.options.showTicks = value;
+                $scope.input.ticks = value;
+                rsic.minSlider.options.showTicks = ticksNormalizer();
             });
 
             $scope.$watchCollection('input', function (newValue, oldValue) {
@@ -116,16 +129,17 @@
                 }
                 if (newValue !== undefined && newValue.step !== oldValue.step) {
                     rsic.minSlider.options.step = newValue.step;
+
                 }
                 if (newValue !== undefined && newValue.customTicks !== oldValue.customTicks){
-                    rsic.minSlider.options.showTicks = parseInt(newValue.customTicks);
+                    $scope.input.customTicks = newValue.customTicks;
+                    rsic.minSlider.options.showTicks = ticksNormalizer();
+                }
+                if (newValue !== undefined && newValue.translate !== oldValue.translate) {
+                    $scope.input.translate = newValue.translate;
+                    $scope.$broadcast('rzSliderForceRender');
                 }
             });
-
-            //this if may be unnecessary
-            if ($element.hasClass('rz-slider-model')) {
-                $element.show();
-            }
 
             function toBool(value) {
                 if (typeof value === 'boolean') {
@@ -136,6 +150,32 @@
                 }
             }
 
+            function ticksNormalizer() {
+                if(toBool($scope.input.ticks) == true || $scope.input.ticks == true){
+                    return parseInt($scope.input.customTicks);
+                } else {
+                    return false;
+                }
+            }
+
+            //func that updates translate option
+            $scope.normalizeTranslateOption = function() {
+                rsic.minSlider.options.translate = $scope.getTranslation();
+            }
+
+            //func that gets/sets translation
+            $scope.getTranslation = function(){
+                return function(value){
+                    switch($scope.input.translate.split('_')[0]) {
+                        case 'currency' :
+                            return $scope.input.translate.split('_')[1] + value;
+                        case 'percentage':
+                            return value + '%';
+                        default:
+                            return value;
+                    }
+                }
+            }
         }
 
         RangeSliderInputController.$inject = ['$scope', '$timeout', '$filter', 'i18nService', '$element', '$document'];

@@ -5,6 +5,9 @@ input {
     template "<ff-range-slider-input></ff-range-slider-input>"
     wizard "<ff-range-slider-input view-type='designView'></ff-range-slider-input>"
     supportedLogicTypes "valid", "input"
+    properties {
+            translate "default"
+        }
     propertiesI18n {
         helptext "help"
         minValue "10"
@@ -12,7 +15,7 @@ input {
         floor "0"
         ceil "100"
         ticks "false"
-        customTicks "custom tick value"
+        customTicks "1"
         step "1"
     }
     resources {

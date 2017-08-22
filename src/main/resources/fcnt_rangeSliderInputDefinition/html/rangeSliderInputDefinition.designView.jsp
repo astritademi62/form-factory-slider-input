@@ -31,6 +31,15 @@
         </div>
 
         <div class="col-md-6">
+            <div class="form-group">
+                <label>
+                    <span message-key="ff.label.floor"></span>
+                </label>
+                <input type="text" class="form-control" ng-model="input.floor">
+            </div>
+        </div>
+
+        <div class="col-md-3">
             <div class="form-group" >
                 <label>
                     <span message-key="ff.label.minValue"></span>
@@ -39,21 +48,12 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
             <div class="form-group" >
                 <label>
                     <span message-key="ff.label.maxValue"></span>
                 </label>
                 <input type="text" class="form-control" ng-model="input.maxValue">
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>
-                    <span message-key="ff.label.floor"></span>
-                </label>
-                <input type="text" class="form-control" ng-model="input.floor">
             </div>
         </div>
 
@@ -89,6 +89,28 @@
                    class="form-control"
                    ng-disabled="input.ticks != true"
                    placeholder="Custom tick variable">
+        </div>
+
+        <div class="col-md-6">
+
+            <div style="position:relative; min-height: 1px; padding-right: 15px; width:25%; float: left">
+                <label>
+                    <span message-key="ff.label.translate"></span>
+                </label>
+                <select class="form-control" ng-model="input.translate" ng-change="normalizeTranslateOption()">
+                    <option ng-repeat="(key, translateType) in translateTypes" value="{{key}}">{{translateType}}</option>
+                </select>
+            </div>
+
+            <div style="position:relative; min-height: 1px; padding-right: 15px; width:25%; float: left">
+                <label ng-if="input.translate.split('_')[0] == 'currency'">
+                    <span message-key="ff.label.currency"></span>
+                </label>
+                <select class="form-control" ng-model="input.translate" ng-if="input.translate.split('_')[0] == 'currency'">
+                    <option ng-repeat="(key, currencyType) in currencyTypes" value="currency_{{key}}">{{currencyType}}</option>
+                </select>
+            </div>
+
         </div>
 
     </div>
