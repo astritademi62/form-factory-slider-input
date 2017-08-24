@@ -44,7 +44,7 @@
                 currency_$: 'Currency',
                 percentage: 'Percentage'
             };
-            $scope.currencyTypes = {                  // [ "$", "£", "€" ] these are the currency types for the currency translate option
+            $scope.currencyTypes = {                  // [ "$", "£", "€" ] these are the currency types for the currency translation option
                 '&#36;' : String.fromCharCode(36),
                 '&#x00A3;' : String.fromCharCode(163),
                 '&#8364;' : String.fromCharCode(8364)
@@ -88,34 +88,34 @@
             // watch input options for the minSlider object and overwrite the old values with the new values
             $scope.$watchCollection('input', function (newValue, oldValue) {
                 if (newValue !== undefined && newValue.initValue !== oldValue.initValue) {
-                    if (!isNaN(newValue.initValue)){
+                    if (isNaN(newValue.initValue) || newValue.initValue == "" || newValue.initValue == undefined){
+                        errorToast();
+                    } else {
                         $scope.input.value = parseInt(newValue.initValue);
                         $scope.minSlider.options.showSelectionBarFromValue = parseInt(newValue.initValue);
-                    } else {
-                        errorToast();
                     }
                 }
                 if (newValue !== undefined && newValue.floor !== oldValue.floor) {
-                    if (!isNaN(newValue.floor)){
+                    if (isNaN(newValue.floor) || newValue.floor == "" || newValue.floor == undefined){
+                        errorToast();
+                    } else {
                         $scope.minSlider.options.floor = parseInt(newValue.floor);
                         $scope.minSlider.options.showSelectionBarFromValue = parseInt($scope.input.initValue);
                         $scope.input.value = parseInt($scope.input.initValue);
-                    } else {
-                        errorToast();
                     }
                 }
                 if (newValue !== undefined && newValue.ceil !== oldValue.ceil) {
-                    if (!isNaN(newValue.ceil)){
-                        $scope.minSlider.options.ceil = parseInt(newValue.ceil);
-                    } else {
+                    if (isNaN(newValue.ceil) || newValue.ceil == "" || newValue.ceil == undefined){
                         errorToast();
+                    } else {
+                        $scope.minSlider.options.ceil = parseInt(newValue.ceil);
                     }
                 }
                 if (newValue !== undefined && newValue.step !== oldValue.step) {
-                    if (!isNaN(newValue.step)){
-                        $scope.minSlider.options.step = newValue.step;
-                    } else {
+                    if (isNaN(newValue.step) || newValue.step == "" || newValue.step == undefined){
                         errorToast();
+                    } else {
+                        $scope.minSlider.options.step = newValue.step;
                     }
                 }
                 if (newValue !== undefined && newValue.translate !== oldValue.translate) {
@@ -123,11 +123,11 @@
                     $scope.$broadcast('rzSliderForceRender');
                 }
                 if (newValue !== undefined && newValue.customTicks !== oldValue.customTicks){
-                    if (!isNaN(newValue.customTicks)){
+                    if (isNaN(newValue.customTicks) || newValue.customTicks == "" || newValue.customTicks == undefined){
+                        errorToast();
+                    } else {
                         $scope.input.customTicks = newValue.customTicks;
                         $scope.minSlider.options.showTicks = ticksNormalizer();
-                    } else {
-                        errorToast();
                     }
                 }
             });
@@ -177,7 +177,7 @@
                         title: i18n.message('ff.toast.title.invalidInput'),
                         body: i18n.message('ff.toast.message.errorMessage'),
                         toastId: 'rsic',
-                        timeout: 4000
+                        timeout: 3000
                     });
                 });
             }
