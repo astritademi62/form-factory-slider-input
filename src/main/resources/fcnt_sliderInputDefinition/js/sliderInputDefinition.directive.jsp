@@ -34,7 +34,7 @@
             .directive('ffSliderInput', ['ffTemplateResolver', '$log', '$injector', sliderInput]);
 
         var SliderInputController = function ($scope, $timeout, $filter,
-                                              i18n, $element, $document, $compile, $rootScope) {
+                                              i18n, $element, $document, toaster) {
             var sic = this;
             sic.parsed = {};
             sic.i18nMessageGetter = i18n.message;
@@ -88,27 +88,47 @@
             // watch input options for the minSlider object and overwrite the old values with the new values
             $scope.$watchCollection('input', function (newValue, oldValue) {
                 if (newValue !== undefined && newValue.initValue !== oldValue.initValue) {
-                    $scope.input.value = parseInt(newValue.initValue);
-                    $scope.minSlider.options.showSelectionBarFromValue = parseInt(newValue.initValue);
+                    if (!isNaN(newValue.initValue)){
+                        $scope.input.value = parseInt(newValue.initValue);
+                        $scope.minSlider.options.showSelectionBarFromValue = parseInt(newValue.initValue);
+                    } else {
+                        errorToast();
+                    }
                 }
                 if (newValue !== undefined && newValue.floor !== oldValue.floor) {
-                    $scope.minSlider.options.floor = parseInt(newValue.floor);
-                    $scope.minSlider.options.showSelectionBarFromValue = parseInt($scope.input.initValue);
-                    $scope.input.value = parseInt($scope.input.initValue);
+                    if (!isNaN(newValue.floor)){
+                        $scope.minSlider.options.floor = parseInt(newValue.floor);
+                        $scope.minSlider.options.showSelectionBarFromValue = parseInt($scope.input.initValue);
+                        $scope.input.value = parseInt($scope.input.initValue);
+                    } else {
+                        errorToast();
+                    }
                 }
                 if (newValue !== undefined && newValue.ceil !== oldValue.ceil) {
-                    $scope.minSlider.options.ceil = parseInt(newValue.ceil);
+                    if (!isNaN(newValue.ceil)){
+                        $scope.minSlider.options.ceil = parseInt(newValue.ceil);
+                    } else {
+                        errorToast();
+                    }
                 }
                 if (newValue !== undefined && newValue.step !== oldValue.step) {
-                    $scope.minSlider.options.step = newValue.step;
+                    if (!isNaN(newValue.step)){
+                        $scope.minSlider.options.step = newValue.step;
+                    } else {
+                        errorToast();
+                    }
                 }
                 if (newValue !== undefined && newValue.translate !== oldValue.translate) {
                     oldValue.translate = newValue.translate;
                     $scope.$broadcast('rzSliderForceRender');
                 }
                 if (newValue !== undefined && newValue.customTicks !== oldValue.customTicks){
-                    $scope.input.customTicks = newValue.customTicks;
-                    $scope.minSlider.options.showTicks = ticksNormalizer();
+                    if (!isNaN(newValue.customTicks)){
+                        $scope.input.customTicks = newValue.customTicks;
+                        $scope.minSlider.options.showTicks = ticksNormalizer();
+                    } else {
+                        errorToast();
+                    }
                 }
             });
 
@@ -150,9 +170,20 @@
                 }
             }
 
+            function errorToast() {
+                $timeout(function() {
+                    toaster.pop({
+                        type: 'error',
+                        title: i18n.message('ff.toast.title.invalidInput'),
+                        body: i18n.message('ff.toast.message.errorMessage'),
+                        toastId: 'rsic',
+                        timeout: 4000
+                    });
+                });
+            }
         }
 
-        SliderInputController.$inject = ['$scope', '$timeout', '$filter', 'i18nService', '$element', '$document', '$compile', '$rootScope'];
+        SliderInputController.$inject = ['$scope', '$timeout', '$filter', 'i18nService', '$element', '$document', 'toaster'];
     })();
 
 

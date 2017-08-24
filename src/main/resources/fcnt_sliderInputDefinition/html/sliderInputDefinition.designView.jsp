@@ -31,42 +31,58 @@
         </div>
 
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': !isFieldValid('floor')}">
                 <label>
                     <span message-key="ff.label.floor"></span>
                 </label>
-                <input type="text" class="form-control" ng-model="input.floor">
+                <input type="text"
+                       class="form-control"
+                       ng-model="input.floor"
+                       ff-field-value-validation="number"
+                       field-id="floor">
             </div>
         </div>
 
         <div class="col-md-6">
-            <div class="form-group" >
+            <div class="form-group" ng-class="{'has-error': !isFieldValid('initValue')}">
                 <label>
                     <span message-key="ff.label.initValue"></span>
                 </label>
-                <input type="text" class="form-control" ng-model="input.initValue">
+                <input type="text"
+                       class="form-control"
+                       ng-model="input.initValue"
+                       ff-field-value-validation="number"
+                       field-id="initValue">
             </div>
         </div>
 
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': !isFieldValid('ceil')}">
                 <label>
                     <span message-key="ff.label.ceil"></span>
                 </label>
-                <input type="text" class="form-control" ng-model="input.ceil">
+                <input type="text"
+                       class="form-control"
+                       ng-model="input.ceil"
+                       ff-field-value-validation="number"
+                       field-id="ceil">
             </div>
         </div>
 
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': !isFieldValid('step')}">
                 <label>
                     <span message-key="ff.label.step"></span>
                 </label>
-                <input type="text" class="form-control" ng-model="input.step">
+                <input type="text"
+                       class="form-control"
+                       ng-model="input.step"
+                       ff-field-value-validation="number"
+                       field-id="step">
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6" ng-class="{'has-error': !isFieldValid('ticks')}">
             <div style="display: inline">
                 <label>
                     <span message-key="ff.label.ticks"></span>
@@ -79,7 +95,9 @@
                    ng-model="input.customTicks"
                    class="form-control"
                    ng-disabled="input.ticks != true"
-                   placeholder="Custom tick variable">
+                   placeholder="Custom tick variable"
+                   ff-field-value-validation="number"
+                   field-id="ticks">
         </div>
 
         <div class="col-md-6">

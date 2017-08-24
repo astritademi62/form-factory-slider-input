@@ -42,7 +42,7 @@
         angular.module('formFactory')
             .directive('ffRangeSliderInput', ['ffTemplateResolver', rangeSliderInput]);
 
-        var RangeSliderInputController = function ($scope, $timeout, $filter,
+        var RangeSliderInputController = function ($scope, $timeout, $filter, toaster,
                                               i18n, $element, $document){
             var rsic = this;
 
@@ -107,33 +107,61 @@
             });
 
             $scope.$watchCollection('input', function (newValue, oldValue) {
-                if (newValue !== undefined && newValue.minValue !== oldValue.minValue ){
-                    rsic.minSlider.minValue = parseInt(newValue.minValue);
-                    $scope.input.value.minValue = rsic.minSlider.minValue;
+
+                if (newValue !== undefined && newValue.minValue !== oldValue.minValue ) {
+                    if(!isNaN(newValue.minValue)){
+                        rsic.minSlider.minValue = parseInt(newValue.minValue);
+                        $scope.input.value.minValue = rsic.minSlider.minValue;
+                    } else {
+                        errorToast();
+                    }
                 }
-                if (newValue !== undefined && newValue.maxValue !== oldValue.maxValue ){
-                    rsic.minSlider.maxValue = parseInt(newValue.maxValue);
-                    $scope.input.value.maxValue = rsic.minSlider.maxValue;
+
+                if (newValue !== undefined && newValue.maxValue !== oldValue.maxValue ) {
+                    if(!isNaN(newValue.maxValue)){
+                        rsic.minSlider.maxValue = parseInt(newValue.maxValue);
+                        $scope.input.value.maxValue = rsic.minSlider.maxValue;
+                    } else {
+                        errorToast();
+                    }
                 }
                 if (newValue !== undefined && newValue.floor !== oldValue.floor) {
-                    rsic.minSlider.options.floor = parseInt(newValue.floor);
-                    rsic.minSlider.minValue = parseInt($scope.input.minValue);
-                    rsic.minSlider.maxValue = parseInt($scope.input.maxValue);
-                    $scope.input.value = {
-                        minValue: rsic.minSlider.minValue,
-                        maxValue: rsic.minSlider.maxValue
+                    if (!isNaN(newValue.floor)) {
+                        rsic.minSlider.options.floor = parseInt(newValue.floor);
+                        rsic.minSlider.minValue = parseInt($scope.input.minValue);
+                        rsic.minSlider.maxValue = parseInt($scope.input.maxValue);
+                        $scope.input.value = {
+                            minValue: rsic.minSlider.minValue,
+                            maxValue: rsic.minSlider.maxValue
+                        }
+                    } else {
+                        errorToast();
                     }
                 }
                 if (newValue !== undefined && newValue.ceil !== oldValue.ceil) {
-                    rsic.minSlider.options.ceil = parseInt(newValue.ceil);
+                    if (!isNaN(newValue.ceil)){
+                        rsic.minSlider.options.ceil = parseInt(newValue.ceil);
+                    } else {
+                        errorToast();
+                    }
                 }
                 if (newValue !== undefined && newValue.step !== oldValue.step) {
-                    rsic.minSlider.options.step = newValue.step;
-
+                    if (!isNaN(newValue.step)){
+                        rsic.minSlider.options.step = newValue.step;
+                        if ($scope.input.ticks == false || toBool($scope.input.ticks) == false) {
+                            $scope.input.customTicks = newValue.step;
+                        }
+                    } else {
+                        errorToast();
+                    }
                 }
                 if (newValue !== undefined && newValue.customTicks !== oldValue.customTicks){
-                    $scope.input.customTicks = newValue.customTicks;
-                    rsic.minSlider.options.showTicks = ticksNormalizer();
+                    if (!isNaN(newValue.customTicks)){
+                        $scope.input.customTicks = newValue.customTicks;
+                        rsic.minSlider.options.showTicks = ticksNormalizer();
+                    } else {
+                        errorToast();
+                    }
                 }
                 if (newValue !== undefined && newValue.translate !== oldValue.translate) {
                     $scope.input.translate = newValue.translate;
@@ -176,9 +204,21 @@
                     }
                 }
             }
+
+            function errorToast() {
+                $timeout(function() {
+                    toaster.pop({
+                        type: 'error',
+                        title: i18n.message('ff.toast.title.invalidInput'),
+                        body: i18n.message('ff.toast.message.errorMessage'),
+                        toastId: 'rsic',
+                        timeout: 4000
+                    });
+                });
+            }
         }
 
-        RangeSliderInputController.$inject = ['$scope', '$timeout', '$filter', 'i18nService', '$element', '$document'];
+        RangeSliderInputController.$inject = ['$scope', '$timeout', '$filter', 'toaster', 'i18nService', '$element', '$document'];
     })();
 
 
