@@ -38,6 +38,10 @@
             var sic = this;
             sic.parsed = {};
             sic.i18nMessageGetter = i18n.message;
+            sic.resetLegend = resetLegend;
+            sic.toggleLegend = toggleLegend;
+            sic.legendUpdater = legendUpdater;
+            sic.sizeOfSlider = sizeOfSlider;
 
             $scope.translateTypes = {                 // these are the translate options
                 default : 'Default',
@@ -59,7 +63,8 @@
                     showTicks: ticksNormalizer(),
                     showSelectionBarFromValue: parseInt($scope.input.initValue),
                     readOnly: $scope.readOnly,
-                    translate: null
+                    translate: null,
+                    stepsArray: null
                 }
             }
 
@@ -67,6 +72,7 @@
             sic.$onInit = function () {
                 //init show ticks switch
                 $scope.input.ticks = toBool($scope.input.ticks);
+                $scope.input.enableLegend = toBool($scope.input.enableLegend);
                 // on init if ticks are disabled the default ticks value should equal the steps value
                 if ($scope.input.ticks == false) {
                     $scope.input.customTicks = $scope.input.step;
@@ -75,7 +81,6 @@
                 $scope.input.translate = $scope.input.translate ? $scope.input.translate : 'default';
 
                 $scope.normalizeTranslateOption();
-
             }
 
             $scope.$watch(function() {
@@ -89,7 +94,7 @@
             $scope.$watchCollection('input', function (newValue, oldValue) {
                 if (newValue !== undefined && newValue.initValue !== oldValue.initValue) {
                     if (isNaN(newValue.initValue) || newValue.initValue == "" || newValue.initValue == undefined){
-                        errorToast();
+                        errorToast('ff.toast.message.errorNumber');
                     } else {
                         $scope.input.value = parseInt(newValue.initValue);
                         $scope.minSlider.options.showSelectionBarFromValue = parseInt(newValue.initValue);
@@ -97,23 +102,29 @@
                 }
                 if (newValue !== undefined && newValue.floor !== oldValue.floor) {
                     if (isNaN(newValue.floor) || newValue.floor == "" || newValue.floor == undefined){
-                        errorToast();
+                        errorToast('ff.toast.message.errorNumber');
                     } else {
                         $scope.minSlider.options.floor = parseInt(newValue.floor);
                         $scope.minSlider.options.showSelectionBarFromValue = parseInt($scope.input.initValue);
                         $scope.input.value = parseInt($scope.input.initValue);
+                        if (!$scope.input.enableLegend) {
+                            $scope.$broadcast('rzSliderForceRender');
+                        }
                     }
                 }
                 if (newValue !== undefined && newValue.ceil !== oldValue.ceil) {
                     if (isNaN(newValue.ceil) || newValue.ceil == "" || newValue.ceil == undefined){
-                        errorToast();
+                        errorToast('ff.toast.message.errorNumber');
                     } else {
                         $scope.minSlider.options.ceil = parseInt(newValue.ceil);
+                        if (!$scope.input.enableLegend) {
+                            $scope.$broadcast('rzSliderForceRender');
+                        }
                     }
                 }
                 if (newValue !== undefined && newValue.step !== oldValue.step) {
-                    if (isNaN(newValue.step) || newValue.step == "" || newValue.step == undefined){
-                        errorToast();
+                    if (isNaN(newValue.step) || newValue.step == "" || newValue.step == undefined || newValue.step < 0){
+                        errorToast('ff.toast.message.errorPositiveNumber');
                     } else {
                         $scope.minSlider.options.step = newValue.step;
                     }
@@ -123,8 +134,8 @@
                     $scope.$broadcast('rzSliderForceRender');
                 }
                 if (newValue !== undefined && newValue.customTicks !== oldValue.customTicks){
-                    if (isNaN(newValue.customTicks) || newValue.customTicks == "" || newValue.customTicks == undefined){
-                        errorToast();
+                    if (isNaN(newValue.customTicks) || newValue.customTicks == "" || newValue.customTicks == undefined || newValue.customTicks < 0){
+                        errorToast('ff.toast.message.errorPositiveNumber');
                     } else {
                         $scope.input.customTicks = newValue.customTicks;
                         $scope.minSlider.options.showTicks = ticksNormalizer();
@@ -170,12 +181,71 @@
                 }
             }
 
-            function errorToast() {
+            function resetLegend() {
+                $scope.input.enableLegend = false;
+                $scope.input.legend = [];
+                $scope.input.stepsValues = [];
+                $scope.minSlider.options.stepsArray = null;
+            }
+
+            //finds the total number of ticks on the slider
+            function sizeOfSlider(){
+                if ($scope.minSlider.options.floor <= 0 && $scope.minSlider.options.ceil >= 0){
+                    return Math.abs($scope.minSlider.options.floor) + Math.abs($scope.minSlider.options.ceil) + 1;
+                } else if ($scope.minSlider.options.floor < 0 && $scope.minSlider.options.ceil < 0){
+                    return Math.abs($scope.minSlider.options.floor) - Math.abs($scope.minSlider.options.ceil) + 1;
+                } else {
+                    return $scope.minSlider.options.ceil - $scope.minSlider.options.floor + 1;
+                }
+            }
+
+            function toggleLegend() {
+                var tmpstepVals = [];
+                for (var i = $scope.minSlider.options.floor; i <= $scope.minSlider.options.ceil; i++) {
+                    tmpstepVals.push(i);
+                }
+                for (var j = 0; j < sizeOfSlider(); j++) {
+                    $scope.input.legend[j] = {value: ''};
+                    $scope.input.stepsValues[j] = {value: tmpstepVals[j]};
+                }
+                if ($scope.input.enableLegend) {
+                    $scope.stepsArray = [];
+
+                    console.log($scope.input.legend);
+                    for (var j = 0; j < sizeOfSlider(); j++) {
+                        $scope.stepsArray.push({
+                            value: parseInt($scope.input.stepsValues[j].value),
+                            legend: $scope.input.legend[j].value
+                        });
+                    }
+                    $scope.minSlider.options.stepsArray = $scope.stepsArray;
+                    $scope.$broadcast('rzSliderForceRender');
+                }
+            }
+
+            function legendUpdater() {
+                var tmpLegend = angular.copy($scope.input.legend);
+                var tmpstepsValues = angular.copy($scope.input.stepsValues);
+                $scope.stepsArray = [];
+
+                for (var j = 0; j < sizeOfSlider(); j++) {
+                    $scope.stepsArray.push({
+                        value: parseInt(tmpstepsValues[j].value),
+                        legend: tmpLegend[j].value
+                    });
+                }
+                $scope.minSlider.options.stepsArray = $scope.stepsArray;
+                $scope.input.legend = tmpLegend;
+                $scope.input.stepValues = tmpstepsValues;
+                $scope.$broadcast('rzSliderForceRender');
+            }
+
+            function errorToast(errorMsg) {
                 $timeout(function() {
                     toaster.pop({
                         type: 'error',
                         title: i18n.message('ff.toast.title.invalidInput'),
-                        body: i18n.message('ff.toast.message.errorMessage'),
+                        body: i18n.message(errorMsg),
                         toastId: 'rsic',
                         timeout: 3000
                     });
@@ -185,5 +255,6 @@
 
         SliderInputController.$inject = ['$scope', '$timeout', '$filter', 'i18nService', '$element', '$document', 'toaster'];
     })();
+
 
 

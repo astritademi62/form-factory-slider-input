@@ -91,7 +91,7 @@
                 <input type="text"
                        class="form-control"
                        ng-model="input.step"
-                       ff-field-value-validation="number"
+                       ff-field-value-validation="positiveNumber"
                        field-id="step">
             </div>
         </div>
@@ -110,7 +110,7 @@
                    class="form-control"
                    ng-disabled="input.ticks != true"
                    placeholder="Custom tick variable"
-                   ff-field-value-validation="number"
+                   ff-field-value-validation="positiveNumber"
                    field-id="ticks">
         </div>
 

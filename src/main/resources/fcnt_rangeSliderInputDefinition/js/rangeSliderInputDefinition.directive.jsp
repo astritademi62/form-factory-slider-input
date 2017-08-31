@@ -110,7 +110,7 @@
 
                 if (newValue !== undefined && newValue.minValue !== oldValue.minValue ) {
                     if(isNaN(newValue.minValue) || newValue.minValue == "" || newValue.minValue == undefined){
-                        errorToast();
+                        errorToast('ff.toast.message.errorNumber');
                     } else {
                         rsic.minSlider.minValue = parseInt(newValue.minValue);
                         $scope.input.value.minValue = rsic.minSlider.minValue;
@@ -119,7 +119,7 @@
 
                 if (newValue !== undefined && newValue.maxValue !== oldValue.maxValue ) {
                     if(isNaN(newValue.maxValue) || newValue.maxValue == "" || newValue.maxValue == undefined){
-                        errorToast();
+                        errorToast('ff.toast.message.errorNumber');
                     } else {
                         rsic.minSlider.maxValue = parseInt(newValue.maxValue);
                         $scope.input.value.maxValue = rsic.minSlider.maxValue;
@@ -127,7 +127,7 @@
                 }
                 if (newValue !== undefined && newValue.floor !== oldValue.floor) {
                     if (isNaN(newValue.floor) || newValue.floor == "" || newValue.floor == undefined) {
-                        errorToast();
+                        errorToast('ff.toast.message.errorNumber');
                     } else {
                         rsic.minSlider.options.floor = parseInt(newValue.floor);
                         rsic.minSlider.minValue = parseInt($scope.input.minValue);
@@ -140,14 +140,14 @@
                 }
                 if (newValue !== undefined && newValue.ceil !== oldValue.ceil) {
                     if (isNaN(newValue.ceil) || newValue.ceil == "" || newValue.ceil == undefined){
-                        errorToast();
+                        errorToast('ff.toast.message.errorNumber');
                     } else {
                         rsic.minSlider.options.ceil = parseInt(newValue.ceil);
                     }
                 }
                 if (newValue !== undefined && newValue.step !== oldValue.step) {
-                    if (isNaN(newValue.step) || newValue.step == "" || newValue.step == undefined){
-                        errorToast();
+                    if (isNaN(newValue.step) || newValue.step == "" || newValue.step == undefined || newValue.step < 0){
+                        errorToast('ff.toast.message.errorPositiveNumber');
                     } else {
                         rsic.minSlider.options.step = newValue.step;
                         if ($scope.input.ticks == false || toBool($scope.input.ticks) == false) {
@@ -156,8 +156,8 @@
                     }
                 }
                 if (newValue !== undefined && newValue.customTicks !== oldValue.customTicks){
-                    if (isNaN(newValue.customTicks) || newValue.customTicks == "" || newValue.customTicks == undefined){
-                        errorToast();
+                    if (isNaN(newValue.customTicks) || newValue.customTicks == "" || newValue.customTicks == undefined || newValue.customTicks < 0){
+                        errorToast('ff.toast.message.errorPositiveNumber');
                     } else {
                         $scope.input.customTicks = newValue.customTicks;
                         rsic.minSlider.options.showTicks = ticksNormalizer();
@@ -206,12 +206,12 @@
                 }
             }
 
-            function errorToast() {
+            function errorToast(errorMsg) {
                 $timeout(function() {
                     toaster.pop({
                         type: 'error',
                         title: i18n.message('ff.toast.title.invalidInput'),
-                        body: i18n.message('ff.toast.message.errorMessage'),
+                        body: i18n.message(errorMsg),
                         toastId: 'rsic',
                         timeout: 3000
                     });

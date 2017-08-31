@@ -10,12 +10,19 @@ input {
     }
     propertiesI18n {
         helptext "help"
-        initValue "10"
+        initValue "1"
         floor "0"
-        ceil "100"
+        ceil "10"
         ticks "false"
         step "1"
         customTicks "1"
+        enableLegend "false"
+        stepsValues {
+            values "one":"one", "two":"two"
+        }
+        legend {
+            values "one":"one", "two":"two"
+        }
     }
     resources {
         css "css/rzslider.css"
