@@ -19,10 +19,13 @@
                    ng-model-options="{'allowInvalid':true}">
                 <rzslider rz-slider-model="input.value" rz-slider-options="minSlider.options"></rzslider>
         </div>
-        <span class="help-block"
-              ng-show="input.helptext != undefined">
+        <div style="padding-top: 10px">
+            <span class="help-block"
+                  ng-show="input.helptext != undefined">
             {{input.helptext}}
         </span>
+        </div>
+
         <span class="help-block"
               ng-repeat="(validationName, validation) in input.validations"
               ng-show="form[input.name].$error[(validationName | normalize)]&&form[input.name].$dirty">
