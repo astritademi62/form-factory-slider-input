@@ -10,13 +10,21 @@ input {
         }
     propertiesI18n {
         helptext "help"
-        minValue "10"
-        maxValue "90"
+        minValue "3"
+        maxValue "6"
         floor "0"
-        ceil "100"
+        ceil "10"
         ticks "false"
         customTicks "1"
         step "1"
+        enableLegend "false"
+        vertical "false"
+        stepsValues {
+            values "0":"0", "1":"1", "2":"2", "3":"3", "4":"4", "5":"5", "6":"6", "7":"7", "8":"8", "9":"9", "10":"10"
+        }
+        legend {
+            values "0":"", "1":"", "2":"", "3":"", "4":"", "5":"", "6":"", "7":"", "8":"", "9":"", "10":""
+        }
     }
     resources {
         css "css/rzslider.css"

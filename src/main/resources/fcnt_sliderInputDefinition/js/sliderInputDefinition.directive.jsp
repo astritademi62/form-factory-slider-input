@@ -35,7 +35,7 @@
         .directive('ffSliderInput', ['ffTemplateResolver', '$log', '$injector', sliderInput]);
 
     var SliderInputController = function ($scope, $timeout, $filter,
-                                          i18n, $element, $document, toaster, $rootScope) {
+                                          i18n, $element, $document, toaster, $rootScope, $compile) {
         var sic = this;
         sic.parsed = {};
         sic.i18nMessageGetter = i18n.message;
@@ -61,6 +61,7 @@
                 floor: parseInt($scope.input.floor),
                 ceil: parseInt($scope.input.ceil),
                 step: $scope.input.step,
+                vertical: verticalization(),
                 showTicks: ticksNormalizer(),
                 showTicksValues: toBool($scope.input.enableLegend),
                 stepsArray: $scope.stepsArray,
@@ -72,8 +73,11 @@
 
         //It works now, but you have to recompile to see it update in builder mode.
         sic.$onInit = function () {
+            //init vertical switch
+            $scope.input.vertical = toBool($scope.input.vertical);
             //init show ticks switch
             $scope.input.ticks = toBool($scope.input.ticks);
+            //init legend
             $scope.input.enableLegend = toBool($scope.input.enableLegend);
             if ($scope.input.enableLegend) {
                initStepsArray();
@@ -115,6 +119,14 @@
         }, function(value) {
             $scope.input.ticks = value;
             $scope.minSlider.options.showTicks = ticksNormalizer();
+        });
+
+        $scope.$watch(function() {
+            return $scope.input.vertical;
+        }, function(value) {
+            $scope.input.vertical = value;
+            $scope.minSlider.options.vertical = verticalization();
+            recompileRzSlider();
         });
 
         // watch input options for the minSlider object and overwrite the old values with the new values
@@ -190,6 +202,10 @@
                             value: $scope.minSlider.options.ceil
                         },
                         {
+                            property: 'showSelectionBarFromValue',
+                            value: parseInt($scope.input.initValue)
+                        },
+                        {
                             property: 'stepsArray',
                             value: null
                         },
@@ -224,6 +240,7 @@
                     property: 'translate',
                     value: $scope.minSlider.options.translate
                 });
+                $scope.$broadcast('rzSliderForceRender');
             }
             if (newValue !== undefined && newValue.customTicks !== oldValue.customTicks){
                 if (isNaN(newValue.customTicks) || newValue.customTicks == "" || newValue.customTicks == undefined || newValue.customTicks < 0){
@@ -247,6 +264,38 @@
             }
             else {
                 return value === 'true';
+            }
+        }
+
+        $scope.returnDivHeight = function() {
+            if (toBool($scope.input.vertical) == true || $scope.input.vertical == true) {
+                return "padding-left: 50px; height: 500px";
+            } else {
+                return "height: auto";
+            }
+        }
+
+        function recompileRzSlider(){
+            $timeout(function(){
+                var element = $element.find('.slider');
+                if (sic.sliderScope != null){
+                    sic.sliderScope.$destroy();
+                    sic.sliderScope = null;
+                    element.empty();
+                }
+                sic.sliderScope = $scope.$new();
+                var newElement = angular.element(document.createElement('rzslider'));
+                newElement.attr('rz-slider-model', 'input.value').attr('rz-slider-options', 'minSlider.options');
+                element.html(newElement);
+                $compile(element.contents())(sic.sliderScope);
+            });
+        }
+
+        function verticalization() {
+            if (toBool($scope.input.vertical) == true || $scope.input.vertical == true) {
+                return $scope.input.vertical;
+            } else {
+                return false;
             }
         }
 
@@ -302,6 +351,7 @@
                     };
                 }
             }
+            $scope.input.translate = $scope.translateTypes.default;
             $scope.minSlider.options.stepsArray = $scope.stepsArray;
             var properties = [
                 {
@@ -331,10 +381,6 @@
                 {
                     property: 'stepsArray',
                     value: $scope.stepsArray
-                },
-                {
-                    property: 'value',
-                    value: parseInt($scope.input.initValue)
                 }
             ];
             $rootScope.$broadcast('updateSliderOptions', properties);
@@ -343,6 +389,7 @@
         function resetLegend() {
             $scope.input.enableLegend = false;
             $scope.minSlider.options.showTicksValues = toBool($scope.input.enableLegend);
+            $scope.input.translate = $scope.translateTypes.default;
             $scope.input.legend = [];
             $scope.input.stepsValues = [];
             var properties = [
@@ -368,12 +415,12 @@
                     value: null
                 },
                 {
-                    property: 'value',
-                    value: parseInt($scope.input.initValue)
-                },
-                {
                     property: 'translate',
                     value: null
+                },
+                {
+                    property: 'value',
+                    value: parseInt($scope.input.initValue)
                 }
             ];
             $rootScope.$broadcast('updateSliderOptions', properties);
@@ -403,6 +450,27 @@
                     {
                         property: 'showTicksValues',
                         value: $scope.minSlider.options.showTicksValues
+                    },
+                    {
+                        property: 'value',
+                        value: parseInt($scope.input.initValue)
+                    }
+                ]);
+            } else {
+                $scope.stepsArray = null;
+                $scope.minSlider.options.showTicksValues = $scope.input.enableLegend;
+                $rootScope.$broadcast('updateSliderOptions', [
+                    {
+                        property: 'stepsArray',
+                        value: $scope.stepsArray
+                    },
+                    {
+                        property: 'showTicksValues',
+                        value: $scope.minSlider.options.showTicksValues
+                    },
+                    {
+                        property: 'value',
+                        value: parseInt($scope.input.initValue)
                     }
                 ]);
             }
@@ -458,14 +526,14 @@
                     title: i18n.message('ff.toast.title.invalidInput'),
                     body: i18n.message(errorMsg),
                     toastId: 'rsic',
-                    timeout: 3000
+                    timeout: 2000
                 });
             });
         }
     }
 
     SliderInputController.$inject = ['$scope', '$timeout', '$filter', 'i18nService',
-        '$element', '$document', 'toaster', '$rootScope'];
+        '$element', '$document', 'toaster', '$rootScope', '$compile'];
 })();
 
 

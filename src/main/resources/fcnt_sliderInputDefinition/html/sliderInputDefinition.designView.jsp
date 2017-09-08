@@ -30,6 +30,17 @@
             <input type="text" class="form-control" ng-model="input.helptext">
         </div>
 
+        <div class="form-group">
+            <div style="display: inline">
+                <label>
+                    <span>Vertical</span>
+                </label>
+            </div>
+            <div style="display: inline; padding-left: 20px">
+                <switch ng-model="input.vertical" ng-change="toggleVertical()"></switch>
+            </div>
+        </div>
+
         <div class="col-md-6">
             <div class="form-group" ng-class="{'has-error': !isFieldValid('floor')}">
                 <label>
@@ -167,10 +178,9 @@
                            ng-change="sic.legendUpdater()"
                            ng-model="legendValue.value">
                 </div>
-
             </div>
-
         </div>
+
     </div>
 
 </div>

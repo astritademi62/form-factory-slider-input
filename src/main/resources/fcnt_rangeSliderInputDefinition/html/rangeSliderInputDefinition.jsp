@@ -15,15 +15,19 @@
                    ng-required="isRequired()"
                    ng-model="input.value"
                    ng-model-options="{'allowInvalid':true}">
-            <rzslider rz-slider-model="rsic.minSlider.minValue"
-                      rz-slider-high="rsic.minSlider.maxValue"
-                      rz-slider-options="rsic.minSlider.options"></rzslider>
+            <div class="slider" style="{{returnDivHeight()}}">
+                <rzslider rz-slider-model="ranSlider.minValue"
+                          rz-slider-high="ranSlider.maxValue"
+                          rz-slider-options="ranSlider.options"></rzslider>
+            </div>
         </div>
 
-        <span class="help-block"
-              ng-show="input.helptext != undefined">
-            {{input.helptext}}
-        </span>
+        <div style="padding-top: 10px">
+            <span class="help-block"
+                  ng-show="input.helptext != undefined">
+                {{input.helptext}}
+            </span>
+        </div>
         <span class="help-block"
               ng-repeat="(validationName, validation) in input.validations"
               ng-show="form[input.name].$error[(validationName | normalize)]&&form[input.name].$dirty">

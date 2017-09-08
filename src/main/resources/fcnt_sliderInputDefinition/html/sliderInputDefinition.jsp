@@ -11,13 +11,13 @@
         </span>
     </label>
     <div class="col-sm-10" ff-validations ff-logic>
-        <div class="slider">
             <input type="hidden"
                    name="{{input.name}}"
                    ng-required="isRequired()"
                    ng-model="input.value"
                    ng-model-options="{'allowInvalid':true}">
-                <rzslider rz-slider-model="input.value" rz-slider-options="minSlider.options"></rzslider>
+        <div class="slider" style="{{returnDivHeight()}}">
+            <rzslider rz-slider-model="input.value" rz-slider-options="minSlider.options"></rzslider>
         </div>
         <div style="padding-top: 10px">
             <span class="help-block"
