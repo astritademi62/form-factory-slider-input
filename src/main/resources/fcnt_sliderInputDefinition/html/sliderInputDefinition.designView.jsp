@@ -37,7 +37,7 @@
                 </label>
             </div>
             <div style="display: inline; padding-left: 20px">
-                <switch ng-model="input.vertical" ng-change="toggleVertical()"></switch>
+                <switch ng-model="input.vertical"></switch>
             </div>
         </div>
 

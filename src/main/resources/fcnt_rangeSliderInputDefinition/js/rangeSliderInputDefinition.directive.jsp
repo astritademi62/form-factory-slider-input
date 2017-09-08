@@ -82,6 +82,8 @@
             }
 
             rsic.$onInit = function() {
+                //init vertical switch
+                $scope.input.vertical = toBool($scope.input.vertical);
                 //init show ticks switch
                 $scope.input.ticks = toBool($scope.input.ticks);
                 $scope.input.enableLegend = toBool($scope.input.enableLegend);
