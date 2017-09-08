@@ -44,7 +44,7 @@
             .directive('ffRangeSliderInput', ['ffTemplateResolver', rangeSliderInput]);
 
         var RangeSliderInputController = function ($scope, $timeout, $filter, toaster,
-                                              i18n, $element, $document, $rootScope){
+                                              i18n, $element, $document, $rootScope, $compile){
             var rsic = this;
             rsic.parsed = {};
             rsic.i18nMessageGetter = i18n.message;
@@ -579,7 +579,8 @@
             }
         }
 
-        RangeSliderInputController.$inject = ['$scope', '$timeout', '$filter', 'toaster', 'i18nService', '$element', '$document', '$rootScope'];
+        RangeSliderInputController.$inject = ['$scope', '$timeout', '$filter', 'toaster', 'i18nService',
+                                                '$element', '$document', '$rootScope', '$compile'];
     })();
 
 
